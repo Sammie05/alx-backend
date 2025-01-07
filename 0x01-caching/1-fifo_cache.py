@@ -5,29 +5,31 @@ BaseCaching = __import__('base_caching').BaseCaching
 
 
 class FIFOCache(BaseCaching):
-    """First In First Out
+    """first in first out catch memory
+    management
     """
     def __init__(self):
-        """init class
+        """init method
         """
         super().__init__()
 
     def put(self, key, item):
-        """assigns to the dictionary
-        self.cache_data the item value
-        for the key key
+        """add cache to cache_data using
+        key value pairs
         """
         if key is None or item is None:
             return
+
+        self.cache_data[key] = item
+
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
             _key = list(self.cache_data)[0]
-            self.cache_data.pop(_key)
+            del self.cache_data[_key]
             print(f'DISCARD: {_key}')
-            self.cache_data[key] = item
 
-        def get(self, key):
-            """get value of key
-            """
-            if key is None or key not in self.cache_data:
-                return None
-            return self.cache_data[key]
+    def get(self, key):
+        """retrieve the value of a key
+        """
+        if key is None or key not in self.cache_data:
+            return None
+        return self.cache_data[key]
